@@ -403,16 +403,22 @@ describe("jasmine.Fixtures using real AJAX call", function () {
 
 
 describe("jQuery matchers", function () {
-  describe("custom jquery object equality tester", function () {
+  describe("when jQuery matcher hides original Jasmine matcher", function () {
     describe("and tested item is jQuery object", function () {
-      it("should do jquery equality", function () {
-        expect($('<div />')).toEqual('div')
+      it("should invoke jQuery version of matcher", function () {
+        expect($('<div />')).toBe('div')
+      })
+    })
+
+    describe("and tested item is not jQuery object", function() {
+      it("should invoke the original version of matcher", function() {
+        expect(true).toBe(true);
       })
     })
 
     describe("and tested item is a dom object", function () {
-      it("should do jquery equality", function () {
-        expect($('<div />').get(0)).toEqual('div')
+      it("should invoke jQuery version of matcher", function () {
+        expect($('<div />').get(0)).toBe('div')
       })
     })
   })
@@ -895,19 +901,19 @@ describe("jQuery matchers", function () {
     })
   })
 
-  describe("toContainElement", function () {
+  describe("toContain", function () {
     beforeEach(function () {
       setFixtures(sandbox().html('<span />'))
     })
 
     it("should pass if object contains selector", function () {
-      expect($('#sandbox')).toContainElement('span')
-      expect($('#sandbox').get(0)).toContainElement('span')
+      expect($('#sandbox')).toContain('span')
+      expect($('#sandbox').get(0)).toContain('span')
     })
 
     it("should pass negated if object does not contain selector", function () {
-      expect($('#sandbox')).not.toContainElement('div')
-      expect($('#sandbox').get(0)).not.toContainElement('div')
+      expect($('#sandbox')).not.toContain('div')
+      expect($('#sandbox').get(0)).not.toContain('div')
     })
   })
 
